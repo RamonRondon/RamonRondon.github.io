@@ -1,77 +1,87 @@
-# Mi Portfolio Personal
+# Portafolio Personal — Ramón Rondón
 
-Bienvenido a mi portfolio personal hosteado en GitHub Pages.
+Bienvenido al repositorio de mi portafolio personal, disponible públicamente en **[ramonrondon.com](https://ramonrondon.com)**. 
 
-## 📋 Descripción
+Este sitio destaca mi trayectoria profesional como matemático y empresario, y está diseñado bajo una estética editorial premium inspirada en el sistema de diseño de Mastercard (detallado en `DESIGN.md`).
 
-Este es un sitio estático hosteado en GitHub Pages. La aplicación es completamente clientside, sin backend.
+## 🚀 Tecnologías y Herramientas
 
-## 🚀 Configuración
-
-### Estructura del Proyecto
-
-La estructura básica de tu proyecto debe ser:
-
-```
-RamonRondon.github.io/
-├── index.html          # Página principal
-├── css/
-│   └── style.css       # Estilos
-├── js/
-│   └── script.js       # Scripts
-├── assets/             # Imágenes, iconos, etc.
-├── README.md           # Este archivo
-└── .gitignore          # Archivos a ignorar
-```
-
-### Requisitos
-
-- **HTML**: Archivo `index.html` en la raíz del repositorio
-- **CSS**: Opcional, puedes usar estilos inline o un framework
-- **JavaScript**: Opcional, para interactividad clientside
-- **Assets**: Imágenes, fuentes, iconos, etc.
-
-### Deployment Automático
-
-GitHub Pages deployará automáticamente tu sitio cuando hagas push a la rama `main`. No requiere configuración adicional.
-
-Tu sitio estará disponible en: `https://RamonRondon.github.io`
-
-## 🛠️ Desarrollo Local
-
-Para probar tu sitio localmente antes de hacer push:
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/RamonRondon/RamonRondon.github.io.git
-   cd RamonRondon.github.io
-   ```
-
-2. Abre `index.html` en tu navegador o usa un servidor local:
-   ```bash
-   # Con Python 3
-   python -m http.server 8000
-   
-   # O con Node.js (http-server)
-   npx http-server
-   ```
-
-3. Visita `http://localhost:8000`
-
-## 📝 Notas Importantes
-
-- El sitio es **completamente estático**, todo corre en el cliente (navegador)
-- No hay backend ni base de datos
-- Los cambios se reflejan automáticamente al hacer push a `main`
-- Puede tomar unos segundos en actualizar después del push
-
-## 📚 Recursos Útiles
-
-- [GitHub Pages Documentation](https://pages.github.com/)
-- [HTML Basics](https://developer.mozilla.org/en-US/docs/Learn/HTML)
-- [CSS Basics](https://developer.mozilla.org/en-US/docs/Learn/CSS)
-- [JavaScript Basics](https://developer.mozilla.org/en-US/docs/Learn/JavaScript)
+- **Constructor**: [Vite](https://vite.dev/) (HTML, CSS y Javascript Vanilla).
+- **Gestor de Paquetes**: [pnpm](https://pnpm.io/).
+- **Estilos**: Vanilla CSS puro, sin frameworks externos, logrando un control completo y máxima velocidad de carga.
+- **Despliegue**: Integración continua con [GitHub Actions](https://github.com/features/actions) para compilación automática y publicación directa en GitHub Pages.
 
 ---
 
-¡Happy coding! 🎉
+## 📁 Estructura del Proyecto
+
+```text
+RamonRondon.github.io/
+├── .github/workflows/deploy.yml   # CI/CD de GitHub Pages
+├── openspec/                     # Especificaciones técnicas de diseño y tareas (OpenSpec)
+├── public/                       # Archivos públicos estáticos de Vite
+│   └── favicon.ico
+├── src/
+│   ├── assets/                   # Recursos compilados por Vite (imágenes, logos)
+│   │   ├── logo_1.png
+│   │   ├── logo_2.png
+│   │   ├── profile.jpeg          # Foto estilo Studio Ghibli
+│   │   └── crop_conexion_educativa.png
+│   ├── main.js                   # Lógica y animaciones
+│   └── style.css                 # Tokens de diseño y hojas de estilos globales
+├── CNAME                         # Dominio personalizado (ramonrondon.com)
+├── DESIGN.md                     # Directivas del sistema de diseño (Mastercard inspired)
+├── index.html                    # Estructura HTML principal
+├── package.json                  # Scripts y dependencias de npm
+├── vite.config.js                # Configuración de compilación de Vite
+└── pnpm-lock.yaml                # Lockfile de dependencias
+```
+
+> [!NOTE]
+> **Ubicación de los Assets**: Todos los logos e imágenes se encuentran dentro de `src/assets/`. Esto permite a Vite procesar las imágenes, optimizar su peso y añadirles un hash único de caché (por ejemplo, `logo_1-DfxZ5AKM.png`) al compilar el proyecto a la carpeta `/dist/`, evitando errores 404 de recursos no encontrados.
+
+---
+
+## 🛠️ Desarrollo Local
+
+Para correr, editar y previsualizar el sitio localmente:
+
+1. **Instalar Dependencias**:
+   ```bash
+   pnpm install
+   ```
+
+2. **Aprobar Scripts de Compilación** (Requerido por pnpm para la compilación de `esbuild`):
+   ```bash
+   pnpm approve-builds --all
+   ```
+
+3. **Iniciar Servidor de Desarrollo**:
+   ```bash
+   pnpm dev
+   ```
+   Abre [http://localhost:5173](http://localhost:5173) en tu navegador para ver los cambios en tiempo real.
+
+4. **Compilar para Producción**:
+   ```bash
+   pnpm build
+   ```
+   Esto compilará el proyecto en la carpeta `/dist/` con código minimizado y optimizado.
+
+---
+
+## 🌐 Despliegue Automático
+
+El portafolio se despliega automáticamente en **https://ramonrondon.com** cada vez que haces `push` a la rama `main`:
+1. El workflow de GitHub Actions se dispara.
+2. Compila la aplicación con Node 22 y `pnpm build`.
+3. Sube la carpeta `/dist/` resultante.
+4. GitHub Pages sirve el contenido compilado directamente en tu dominio.
+
+---
+
+## 🎨 Principios de Diseño
+- **Fondo Canvas Cream (`#F3F0EE`)**: Una superficie cálida y editorial que reemplaza al blanco frío.
+- **Rigor Tipográfico**: Fuente Sofia Sans con pesos 450 (lectura suave de párrafos) y 500 (negritas y títulos con letter-spacing de `-2%`).
+- **Máscaras Circulares**: Las imágenes principales se recortan en círculos perfectos con botones satélite `→` o `↗` acoplados.
+- **Líneas Orbitales**: Un trazo orbital animado conecta visualmente tus facetas para guiar al usuario por la narrativa.
