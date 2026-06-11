@@ -2,6 +2,11 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: './',
+  server: {
+    watch: {
+      ignored: ['**/src/assets/*.crdownload', '**/src/assets/*.mp4', '**/posts/**'],
+    },
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
