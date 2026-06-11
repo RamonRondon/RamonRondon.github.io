@@ -323,13 +323,15 @@ h3 {
 }
 
 .hero-portrait-circle {
-  width: 80%;
+  width: 75%;
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 12px 30px rgba(20, 20, 19, 0.05);
   cursor: pointer;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  isolation: isolate;
 }
 
 .hero-avatar-img, .hero-avatar-video {
