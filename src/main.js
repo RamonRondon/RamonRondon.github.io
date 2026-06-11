@@ -20,6 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Profile video play/pause on hover
+  const circle = document.querySelector('.hero-portrait-circle');
+  const video = document.querySelector('.hero-avatar-video');
+  if (circle && video) {
+    circle.addEventListener('mouseenter', () => {
+      video.play().catch(e => console.warn("Video play interrupted:", e));
+    });
+    circle.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+
   // Orbit Line Drawing/Animation Setup
   setupOrbits();
 });
