@@ -7,38 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (menuBtn && navLinks) {
     menuBtn.addEventListener('click', () => {
-      // Basic toggle for mobile view
-      const isVisible = navLinks.style.display === 'flex';
-      navLinks.style.display = isVisible ? 'none' : 'flex';
-      
-      // Visual feedback on hamburger lines
-      const spans = menuBtn.querySelectorAll('span');
-      if (spans.length === 3) {
-        if (!isVisible) {
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-          spans[1].style.opacity = '0';
-          spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-        } else {
-          spans[0].style.transform = 'none';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = 'none';
-        }
-      }
+      menuBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
     });
 
-    // Reset styles on resize
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) {
-        navLinks.style.display = 'flex';
-        const spans = menuBtn.querySelectorAll('span');
-        if (spans.length === 3) {
-          spans[0].style.transform = 'none';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = 'none';
-        }
-      } else {
-        navLinks.style.display = 'none';
-      }
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
     });
   }
 
