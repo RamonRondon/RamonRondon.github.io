@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramón Rondón | Matemático y Empresario</title>
+  <meta name="description" content="Portafolio profesional de Ramón Rondón. Descubre la intersección entre las matemáticas avanzadas y la innovación empresarial.">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+
+  <!-- Floating Nav Pill -->
+  <header class="header-nav">
+    <div class="container">
+      <nav class="nav-pill">
+        <a href="#" class="nav-logo" id="nav-logo-link">
+          <img src="./assets/logo_1.png" alt="Ramón Rondón Logo">
+          <span>Ramón Rondón</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#hero">Inicio</a></li>
+          <li><a href="#facets">Especialidades</a></li>
+          <li><a href="#credentials">Trayectoria</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#contact" class="btn-primary">Hablemos</a>
+          <button class="menu-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container">
+      <div class="hero-stadium">
+        <div class="hero-content">
+          <div class="eyebrow">Ramón Rondón</div>
+          <h1>Modelando el futuro con lógica y visión empresarial</h1>
+          <p class="hero-tagline">
+            Matemático de profesión y empresario por vocación. Transformo la abstracción matemática en soluciones estratégicas de alto impacto para el mundo de los negocios.
+          </p>
+          <div style="margin-top: 24px; display: flex; gap: 16px;">
+            <a href="#facets" class="btn-primary">Ver Especialidades</a>
+            <a href="#credentials" class="btn-secondary">Mi Trayectoria</a>
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <div class="hero-portrait-circle">
+            <img src="./assets/profile.jpeg" alt="Ramón Rondón - Studio Ghibli Style">
+          </div>
+          <!-- Satellite Arrow Button -->
+          <a href="#credentials" class="hero-satellite" aria-label="Ir a trayectoria">
+            →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facets Section -->
+  <section id="facets" class="section facets-section">
+    <div class="ghost-watermark">CONEXIÓN</div>
+    <div class="container">
+      <div class="section-title-wrapper">
+        <div class="eyebrow">Dos Facetas, Una Sinergia</div>
+        <h2>La Intersección del Rigor y la Visión</h2>
+      </div>
+
+      <div class="facets-grid">
+        <!-- SVG Orbit Lines background -->
+        <svg class="orbit-svg" viewBox="0 0 800 400" preserveAspectRatio="none">
+          <path class="orbit-line" d="M 150 200 Q 400 50 650 200" fill="none" stroke="#F37338" stroke-width="1.5" />
+        </svg>
+
+        <!-- Mathematics Card -->
+        <div class="facet-card">
+          <div class="facet-portrait-wrapper">
+            <div class="facet-portrait">
+              <!-- Inline Math SVG -->
+              <svg class="facet-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19L20 5M4 5l16 14" />
+                <circle cx="12" cy="12" r="10" stroke-dasharray="2 2" />
+              </svg>
+            </div>
+            <a href="#math-details" class="satellite-btn" aria-label="Ver matemáticas">→</a>
+          </div>
+          <h3>Matemática Aplicada</h3>
+          <p style="color: var(--color-slate-gray); max-width: 300px; margin: 12px auto 0;">
+            Modelado analítico, algoritmos complejos y optimización cuantitativa para descifrar patrones ocultos.
+          </p>
+        </div>
+
+        <!-- Entrepreneurship Card -->
+        <div class="facet-card">
+          <div class="facet-portrait-wrapper">
+            <div class="facet-portrait">
+              <!-- Inline Business/Growth SVG -->
+              <svg class="facet-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <a href="#business-details" class="satellite-btn" aria-label="Ver negocios">→</a>
+          </div>
+          <h3>Liderazgo Empresarial</h3>
+          <p style="color: var(--color-slate-gray); max-width: 300px; margin: 12px auto 0;">
+            Creación de empresas, gestión de riesgos e innovación en modelos de negocios sustentados por datos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Credentials Section -->
+  <section id="credentials" class="section credentials-section">
+    <div class="ghost-watermark">CREACIÓN</div>
+    <div class="container">
+      <div class="credentials-grid">
+        <div class="credentials-text">
+          <div class="eyebrow">Trayectoria Profesional</div>
+          <h2>Decisiones basadas en el análisis y la experiencia</h2>
+          <p style="font-size: 18px; color: var(--color-slate-gray); margin-bottom: 16px;">
+            Mi propósito es unir la precisión científica con la audacia empresarial. No se trata solo de recopilar datos, sino de estructurar la lógica para guiar el crecimiento.
+          </p>
+          <div class="credentials-highlights">
+            <div class="highlight-box">
+              <h4>+10 Años</h4>
+              <p>Desarrollando modelos cuantitativos para negocios complejos.</p>
+            </div>
+            <div class="highlight-box">
+              <h4>Múltiples Startups</h4>
+              <p>Fundadas, escaladas y asesoradas en eficiencia operativa.</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <!-- Secondary Stadium Container for Brand Logo Display -->
+          <div style="background-color: var(--color-white); border-radius: 40px; padding: 48px; box-shadow: var(--shadow-card); text-align: center; width: 100%; max-width: 400px;">
+            <img src="./assets/logo_2.png" alt="Ramón Rondón Emblema" style="width: 120px; height: auto; margin-bottom: 24px;">
+            <h3>Visión Integradora</h3>
+            <p style="font-size: 14px; color: var(--color-slate-gray); margin-top: 12px;">
+              "El éxito en los negocios es el resultado de un algoritmo optimizado por la intuición humana."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <h2 class="footer-h2">¿Listo para dar un salto cuantitativo en tu negocio?</h2>
+        <div class="footer-cta-wrapper">
+          <a href="mailto:ramon.rondon@example.com" class="btn-primary" style="background-color: var(--color-white); color: var(--color-ink-black); border-color: var(--color-white);">Contáctame</a>
+        </div>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h5>Ramón Rondón</h5>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">
+            La unión de las matemáticas y la iniciativa empresarial para crear valor real.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Especialidades</h5>
+          <ul class="footer-links">
+            <li><a href="#facets">Modelado Cuantitativo</a></li>
+            <li><a href="#facets">Análisis de Riesgo</a></li>
+            <li><a href="#facets">Estrategia de Negocios</a></li>
+            <li><a href="#facets">Desarrollo de Algoritmos</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Explorar</h5>
+          <ul class="footer-links">
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#facets">Especialidades</a></li>
+            <li><a href="#credentials">Trayectoria</a></li>
+            <li><a href="#contact">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contacto</h5>
+          <ul class="footer-links">
+            <li><a href="mailto:ramon.rondon@example.com">Email ↗</a></li>
+            <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacidad</a>
+          <a href="#">Términos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./src/main.js" type="module"></script>
+</body>
+</html>

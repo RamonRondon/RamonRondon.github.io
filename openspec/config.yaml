@@ -1,0 +1,13 @@
+# OpenSpec Configuration
+
+schema: spec-driven
+strict_tdd: false
+
+context: |
+  Tech stack: Empty repository containing only static assets (logo_1.png, logo_2.png). No framework, runtime, or build tools are configured.
+  Testing: None. No test runner or testing framework detected.
+  Conventions: Standard OpenSpec conventions.
+
+rules:
+  apply:
+    - "strict_tdd is set to false because no test runner has been detected in the project."

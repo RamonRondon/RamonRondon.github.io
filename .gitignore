@@ -1,0 +1,16 @@
+# Local AI runtime state
+.atl/
+
+# Build and package manager folders
+node_modules/
+dist/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local env files
+.env.local
+.env.*.local
