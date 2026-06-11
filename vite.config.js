@@ -9,6 +9,9 @@ export default defineConfig({
       input: {
         main: './index.html',
         about: './about.html',
+        blog: './blog.html',
+        post: './post.html',
+        admin: './admin.html',
       },
     },
   },

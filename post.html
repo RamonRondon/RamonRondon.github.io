@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artículo | Ramón Rondón Montañez</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .post-wrapper {
+      padding-top: 140px;
+      padding-bottom: var(--space-12);
+      background-color: var(--color-canvas-cream);
+      min-height: 80vh;
+    }
+
+    .post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-3);
+    }
+
+    .post-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--color-slate-gray);
+      font-weight: 500;
+      font-size: 15px;
+      margin-bottom: var(--space-6);
+      transition: var(--transition-smooth);
+    }
+
+    .post-back-btn:hover {
+      color: var(--color-light-signal-orange);
+      transform: translateX(-4px);
+    }
+
+    .post-header {
+      margin-bottom: var(--space-6);
+    }
+
+    .post-meta-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-light-signal-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .post-title {
+      font-size: 40px;
+      line-height: 1.2;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--color-ink-black);
+    }
+
+    @media (max-width: 600px) {
+      .post-title {
+        font-size: 32px;
+      }
+    }
+
+    .post-date-author {
+      font-size: 14px;
+      color: var(--color-slate-gray);
+      border-bottom: 1px solid rgba(20, 20, 19, 0.1);
+      padding-bottom: 24px;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Article Markdown Content Styling */
+    .post-body {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #2c2c2a;
+    }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: var(--color-ink-black);
+      margin-top: 36px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .post-body h2 { font-size: 28px; }
+    .post-body h3 { font-size: 22px; }
+
+    .post-body p {
+      margin-bottom: 24px;
+    }
+
+    .post-body strong {
+      color: var(--color-ink-black);
+      font-weight: 600;
+    }
+
+    .post-body ul, .post-body ol {
+      margin-bottom: 24px;
+      padding-left: var(--space-4);
+    }
+
+    .post-body li {
+      margin-bottom: 8px;
+    }
+
+    .post-body blockquote {
+      border-left: 4px solid var(--color-light-signal-orange);
+      padding-left: 20px;
+      margin: 32px 0;
+      font-style: italic;
+      color: var(--color-slate-gray);
+    }
+
+    .error-card {
+      background-color: var(--color-white);
+      border-radius: 24px;
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      box-shadow: var(--shadow-card);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Nav Pill -->
+  <header class="header-nav">
+    <div class="container">
+      <nav class="nav-pill">
+        <a href="index.html" class="nav-logo">
+          <img src="./src/assets/logo_1.png" alt="Ramón Rondón Logo">
+          <span>Ramón Rondón</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html#hero">Inicio</a></li>
+          <li><a href="index.html#education">Educación</a></li>
+          <li><a href="index.html#facets">Especialidades</a></li>
+          <li><a href="about.html">Sobre Mí</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="index.html#contact" class="btn-primary">Hablemos</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Article Area -->
+  <main class="post-wrapper">
+    <div class="post-container" id="post-content-area">
+      <!-- Loading State -->
+      <div style="text-align: center; padding: var(--space-12) 0;" id="loading-spinner">
+        <span style="color: var(--color-slate-gray); font-style: italic; font-size: 18px;">Cargando artículo...</span>
+      </div>
+
+      <!-- Article Render Target (Hidden initially) -->
+      <article id="article-body" style="display: none;">
+        <a href="blog.html" class="post-back-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Volver al blog
+        </a>
+
+        <header class="post-header">
+          <span class="post-meta-tag" id="article-category">Categoría</span>
+          <h1 class="post-title" id="article-title">Título del Artículo</h1>
+          <div class="post-date-author">
+            Escrito por <strong style="color: var(--color-ink-black);">Ramón Rondón</strong> el <span id="article-date">Fecha</span>
+          </div>
+        </header>
+
+        <section class="post-body" id="article-content">
+          <!-- Markdown injection target -->
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <h2 class="footer-h2">¿Listo para dar un salto cuantitativo en tu negocio?</h2>
+        <div class="footer-cta-wrapper">
+          <a href="mailto:ramonrondon@gmail.com" class="btn-primary" style="background-color: var(--color-white); color: var(--color-ink-black); border-color: var(--color-white);">Contáctame</a>
+        </div>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h5>Ramón Rondón</h5>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">
+            La unión de las matemáticas y la iniciativa empresarial para crear valor real.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Especialidades</h5>
+          <ul class="footer-links">
+            <li><a href="index.html#facets">Modelado Cuantitativo</a></li>
+            <li><a href="index.html#facets">Análisis de Riesgo</a></li>
+            <li><a href="index.html#facets">Estrategia de Negocios</a></li>
+            <li><a href="index.html#facets">Desarrollo de Algoritmos</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Explorar</h5>
+          <ul class="footer-links">
+            <li><a href="index.html#hero">Inicio</a></li>
+            <li><a href="index.html#education">Educación</a></li>
+            <li><a href="index.html#facets">Especialidades</a></li>
+            <li><a href="about.html">Sobre Mí</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contacto</h5>
+          <ul class="footer-links">
+            <li><a href="mailto:ramonrondon@gmail.com">Email ↗</a></li>
+            <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacidad</a>
+          <a href="#">Términos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    async function loadPost() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+      const contentArea = document.getElementById('post-content-area');
+      const spinner = document.getElementById('loading-spinner');
+      const article = document.getElementById('article-body');
+
+      if (!slug) {
+        showErrorPage('No se especificó ningún artículo.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`./posts/${slug}.json`);
+        if (!response.ok) throw new Error('Artículo no encontrado');
+        const postData = await response.json();
+
+        // Populate article details
+        document.title = `${postData.title} | Blog Ramón Rondón`;
+        document.getElementById('article-title').innerText = postData.title;
+        document.getElementById('article-category').innerText = postData.category;
+        
+        const dateObj = new Date(postData.date + 'T00:00:00');
+        document.getElementById('article-date').innerText = dateObj.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+
+        // Render Markdown content
+        document.getElementById('article-content').innerHTML = marked.parse(postData.content || '');
+
+        // Switch screens
+        spinner.style.display = 'none';
+        article.style.display = 'block';
+
+      } catch (err) {
+        showErrorPage('El artículo que buscas no existe o ha sido removido.');
+      }
+    }
+
+    function showErrorPage(message) {
+      const contentArea = document.getElementById('post-content-area');
+      contentArea.innerHTML = `
+        <div class="error-card">
+          <h2 style="font-size: 48px; color: var(--color-light-signal-orange); margin-bottom: var(--space-3);">404</h2>
+          <h3 style="margin-bottom: 16px;">Artículo No Encontrado</h3>
+          <p style="color: var(--color-slate-gray); margin-bottom: 32px;">${message}</p>
+          <a href="blog.html" class="btn-primary">Volver al Blog</a>
+        </div>
+      `;
+    }
+
+    loadPost();
+  </script>
+</body>
+</html>
