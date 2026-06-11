@@ -4,6 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artículo | Ramón Rondón Montañez</title>
+  <meta name="description" content="Lee los últimos artículos en el blog de Ramón Rondón. Análisis sobre la intersección entre matemáticas y emprendimiento.">
+  <link rel="canonical" href="https://ramonrondon.com/post.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ramonrondon.com/post.html">
+  <meta property="og:title" content="Artículo | Blog Ramón Rondón">
+  <meta property="og:description" content="Lee los últimos artículos en el blog de Ramón Rondón. Análisis sobre la intersección entre matemáticas y emprendimiento.">
+  <meta property="og:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://ramonrondon.com/post.html">
+  <meta name="twitter:title" content="Artículo | Blog Ramón Rondón">
+  <meta name="twitter:description" content="Lee los últimos artículos en el blog de Ramón Rondón. Análisis sobre la intersección entre matemáticas y emprendimiento.">
+  <meta name="twitter:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+
+  <link rel="icon" type="image/png" href="./src/assets/logo_1.png">
   <link rel="stylesheet" href="./src/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
@@ -125,6 +143,47 @@
       box-shadow: var(--shadow-card);
       margin-top: 40px;
     }
+
+    .post-meta-row {
+      font-size: 14px;
+      color: var(--color-slate-gray);
+      margin-bottom: var(--space-4);
+    }
+
+    .post-author-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 24px;
+      margin-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(20, 20, 19, 0.1);
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(20, 20, 19, 0.1);
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .author-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-ink-black);
+    }
+
+    .author-bio {
+      font-size: 14px;
+      color: var(--color-slate-gray);
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -172,8 +231,16 @@
         <header class="post-header">
           <span class="post-meta-tag" id="article-category">Categoría</span>
           <h1 class="post-title" id="article-title">Título del Artículo</h1>
-          <div class="post-date-author">
-            Escrito por <strong style="color: var(--color-ink-black);">Ramón Rondón</strong> el <span id="article-date">Fecha</span>
+          <div class="post-meta-row">
+            <span id="article-date">Fecha</span> &middot; <span id="article-reading-time">Calculando lectura...</span>
+          </div>
+          
+          <div class="post-author-block">
+            <img id="author-avatar" src="https://github.com/RamonRondon.png" alt="Ramón Rondón" class="author-avatar">
+            <div class="author-info">
+              <span class="author-name" id="author-name">Ramón Rondón Montañez</span>
+              <span class="author-bio" id="author-bio">Matemático y Empresario</span>
+            </div>
           </div>
         </header>
 
@@ -231,7 +298,7 @@
       </div>
 
       <div class="footer-bottom" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados. <a href="admin.html" style="color: inherit; opacity: 0.2; text-decoration: none; font-size: 10px;">&bull;</a></p>
         <div class="footer-bottom-links">
           <a href="#">Privacidad</a>
           <a href="#">Términos</a>
@@ -247,6 +314,12 @@
       const contentArea = document.getElementById('post-content-area');
       const spinner = document.getElementById('loading-spinner');
       const article = document.getElementById('article-body');
+
+      // Si la página ya está pre-renderizada (el artículo es visible), no hacemos nada más que calcular lectura
+      if (article && article.style.display === 'block') {
+        calculateReadingTime();
+        return;
+      }
 
       if (!slug) {
         showErrorPage('No se especificó ningún artículo.');
@@ -273,6 +346,9 @@
         // Render Markdown content
         document.getElementById('article-content').innerHTML = marked.parse(postData.content || '');
 
+        // Calculate reading time
+        calculateReadingTime();
+
         // Switch screens
         spinner.style.display = 'none';
         article.style.display = 'block';
@@ -294,7 +370,38 @@
       `;
     }
 
+    async function loadGitHubProfile() {
+      try {
+        const response = await fetch('https://api.github.com/users/RamonRondon');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.avatar_url) {
+            document.getElementById('author-avatar').src = data.avatar_url;
+          }
+          if (data.name) {
+            document.getElementById('author-name').innerText = data.name;
+          }
+          if (data.bio) {
+            document.getElementById('author-bio').innerText = data.bio;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load GitHub profile:', e);
+      }
+    }
+
+    function calculateReadingTime() {
+      const content = document.getElementById('article-content');
+      if (content) {
+        const text = content.innerText || '';
+        const words = text.trim().split(/\s+/).filter(Boolean).length;
+        const time = Math.max(1, Math.ceil(words / 225));
+        document.getElementById('article-reading-time').innerText = `${time} min de lectura`;
+      }
+    }
+
     loadPost();
+    loadGitHubProfile();
   </script>
 </body>
 </html>

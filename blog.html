@@ -3,8 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog | Ramón Rondón Montañez</title>
+  <title>El Cuaderno de Notas | Blog de Ramón Rondón</title>
   <meta name="description" content="Artículos, ensayos y reflexiones sobre matemáticas, estrategia empresarial y educación.">
+  <link rel="canonical" href="https://ramonrondon.com/blog.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ramonrondon.com/blog.html">
+  <meta property="og:title" content="El Cuaderno de Notas | Blog de Ramón Rondón">
+  <meta property="og:description" content="Artículos, ensayos y reflexiones sobre matemáticas, estrategia empresarial y educación.">
+  <meta property="og:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://ramonrondon.com/blog.html">
+  <meta name="twitter:title" content="El Cuaderno de Notas | Blog de Ramón Rondón">
+  <meta name="twitter:description" content="Artículos, ensayos y reflexiones sobre matemáticas, estrategia empresarial y educación.">
+  <meta name="twitter:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+
+  <link rel="icon" type="image/png" href="./src/assets/logo_1.png">
   <link rel="stylesheet" href="./src/style.css">
   <style>
     .blog-hero {
@@ -92,7 +109,7 @@
       justify-content: space-between;
     }
 
-    .blog-card h3 {
+    .blog-card h2 {
       font-size: 22px;
       line-height: 1.3;
       margin: 0 0 12px 0;
@@ -231,7 +248,7 @@
       </div>
 
       <div class="footer-bottom" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Ramón Rondón. Todos los derechos reservados. <a href="admin.html" style="color: inherit; opacity: 0.2; text-decoration: none; font-size: 10px;">&bull;</a></p>
         <div class="footer-bottom-links">
           <a href="#">Privacidad</a>
           <a href="#">Términos</a>
@@ -256,7 +273,7 @@
       } catch (err) {
         blogGrid.innerHTML = `
           <div class="empty-state">
-            <h3>No se pudieron cargar los artículos</h3>
+            <h2>No se pudieron cargar los artículos</h2>
             <p>Por favor, intenta de nuevo más tarde.</p>
           </div>
         `;
@@ -295,7 +312,7 @@
       if (filteredPosts.length === 0) {
         blogGrid.innerHTML = `
           <div class="empty-state">
-            <h3>No hay artículos en esta categoría</h3>
+            <h2>No hay artículos en esta categoría</h2>
           </div>
         `;
         return;
@@ -311,14 +328,14 @@
         });
 
         const card = document.createElement('a');
-        card.href = `post.html?slug=${post.slug}`;
+        card.href = `posts/${post.slug}.html`;
         card.className = 'blog-card';
         card.innerHTML = `
           <div class="blog-card-meta">
             <span>${post.category}</span>
             <span>${formattedDate}</span>
           </div>
-          <h3>${post.title}</h3>
+          <h2>${post.title}</h2>
           <p>${post.excerpt}</p>
           <div class="blog-card-link">
             <span>Leer Artículo</span>

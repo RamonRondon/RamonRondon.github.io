@@ -4,6 +4,7 @@
 # Build and package manager folders
 node_modules/
 dist/
+posts/
 
 # Editor and OS files
 .DS_Store
