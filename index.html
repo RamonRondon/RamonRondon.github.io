@@ -14,11 +14,12 @@
     <div class="container">
       <nav class="nav-pill">
         <a href="#" class="nav-logo" id="nav-logo-link">
-          <img src="./assets/logo_1.png" alt="Ramón Rondón Logo">
+          <img src="./src/assets/logo_1.png" alt="Ramón Rondón Logo">
           <span>Ramón Rondón</span>
         </a>
         <ul class="nav-links">
           <li><a href="#hero">Inicio</a></li>
+          <li><a href="#education">Educación</a></li>
           <li><a href="#facets">Especialidades</a></li>
           <li><a href="#credentials">Trayectoria</a></li>
           <li><a href="#contact">Contacto</a></li>
@@ -46,18 +47,49 @@
             Matemático de profesión y empresario por vocación. Transformo la abstracción matemática en soluciones estratégicas de alto impacto para el mundo de los negocios.
           </p>
           <div style="margin-top: 24px; display: flex; gap: 16px;">
-            <a href="#facets" class="btn-primary">Ver Especialidades</a>
-            <a href="#credentials" class="btn-secondary">Mi Trayectoria</a>
+            <a href="#education" class="btn-primary">Conocer Proyecto</a>
+            <a href="#facets" class="btn-secondary">Especialidades</a>
           </div>
         </div>
         <div class="hero-image-wrapper">
           <div class="hero-portrait-circle">
-            <img src="./assets/profile.jpeg" alt="Ramón Rondón - Studio Ghibli Style">
+            <img src="./src/assets/profile.jpeg" alt="Ramón Rondón - Studio Ghibli Style">
           </div>
           <!-- Satellite Arrow Button -->
-          <a href="#credentials" class="hero-satellite" aria-label="Ir a trayectoria">
+          <a href="#education" class="hero-satellite" aria-label="Ir a educación">
             →
           </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section (Conexión Educativa) -->
+  <section id="education" class="section education-section" style="background-color: var(--color-white); border-bottom: 1px solid rgba(20, 20, 19, 0.05);">
+    <div class="ghost-watermark">EDUCACIÓN</div>
+    <div class="container">
+      <div class="credentials-grid" style="grid-template-columns: 0.9fr 1.1fr;">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <!-- Circular Logo Portrait Card matching Mastercard style -->
+          <div class="facet-portrait-wrapper" style="width: 300px; height: 300px; margin-bottom: 0;">
+            <div class="facet-portrait" style="border-width: 6px; box-shadow: var(--shadow-card); background-color: var(--color-white); padding: var(--space-3);">
+              <img src="./src/assets/crop_conexion_educativa.png" alt="Conexión Educativa Logo" style="width: 90%; height: auto; object-fit: contain;">
+            </div>
+            <!-- Satellite Button -->
+            <a href="https://conexioneducativa.com" target="_blank" rel="noopener" class="satellite-btn" aria-label="Visitar Conexión Educativa">
+              ↗
+            </a>
+          </div>
+        </div>
+        <div class="credentials-text">
+          <div class="eyebrow">Proyecto Destacado</div>
+          <h2>Conexión Educativa</h2>
+          <p style="font-size: 18px; color: var(--color-slate-gray); margin-bottom: 24px; line-height: 1.5;">
+            Lidero una iniciativa transformadora que conecta el aprendizaje de las matemáticas con las competencias clave del futuro. <strong>Conexión Educativa</strong> es una plataforma dedicada a desarrollar el pensamiento lógico, analítico y cuantitativo en estudiantes y profesionales, preparando las bases intelectuales para la innovación tecnológica y los negocios.
+          </p>
+          <div>
+            <a href="https://conexioneducativa.com" target="_blank" rel="noopener" class="btn-primary">Visitar Conexión Educativa ↗</a>
+          </div>
         </div>
       </div>
     </div>
@@ -143,7 +175,7 @@
         <div style="display: flex; justify-content: center;">
           <!-- Secondary Stadium Container for Brand Logo Display -->
           <div style="background-color: var(--color-white); border-radius: 40px; padding: 48px; box-shadow: var(--shadow-card); text-align: center; width: 100%; max-width: 400px;">
-            <img src="./assets/logo_2.png" alt="Ramón Rondón Emblema" style="width: 120px; height: auto; margin-bottom: 24px;">
+            <img src="./src/assets/logo_2.png" alt="Ramón Rondón Emblema" style="width: 120px; height: auto; margin-bottom: 24px;">
             <h3>Visión Integradora</h3>
             <p style="font-size: 14px; color: var(--color-slate-gray); margin-top: 12px;">
               "El éxito en los negocios es el resultado de un algoritmo optimizado por la intuición humana."
@@ -184,6 +216,7 @@
           <h5>Explorar</h5>
           <ul class="footer-links">
             <li><a href="#hero">Inicio</a></li>
+            <li><a href="#education">Educación</a></li>
             <li><a href="#facets">Especialidades</a></li>
             <li><a href="#credentials">Trayectoria</a></li>
             <li><a href="#contact">Contacto</a></li>
