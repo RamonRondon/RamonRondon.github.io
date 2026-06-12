@@ -1,5 +1,14 @@
 [
   {
+    "title": "DESDE MI CAMA",
+    "slug": "desde-mi-cama",
+    "date": "2026-06-12",
+    "excerpt": "Inspiración febrero de 2020",
+    "category": "Poemas",
+    "isPoem": true,
+    "isAcrostic": false
+  },
+  {
     "title": "HAY DÍAS",
     "slug": "hay-dias",
     "date": "2026-06-12",
