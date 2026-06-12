@@ -12,16 +12,40 @@
   <meta property="og:url" content="https://ramonrondon.com/post.html">
   <meta property="og:title" content="Artículo | Blog Ramón Rondón">
   <meta property="og:description" content="Lee los últimos artículos en el blog de Ramón Rondón. Análisis sobre la intersección entre matemáticas y emprendimiento.">
-  <meta property="og:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+  <meta property="og:image" content="https://ramonrondon.com/assets/profile.jpeg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://ramonrondon.com/post.html">
   <meta name="twitter:title" content="Artículo | Blog Ramón Rondón">
   <meta name="twitter:description" content="Lee los últimos artículos en el blog de Ramón Rondón. Análisis sobre la intersección entre matemáticas y emprendimiento.">
-  <meta name="twitter:image" content="https://ramonrondon.com/src/assets/profile.jpeg">
+  <meta name="twitter:image" content="https://ramonrondon.com/assets/profile.jpeg">
 
   <link rel="icon" type="image/png" href="./src/assets/logo_1.png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Título del Artículo",
+    "datePublished": "2026-01-01",
+    "author": {
+      "@type": "Person",
+      "name": "Ramón Rondón",
+      "url": "https://ramonrondon.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Ramón Rondón"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://ramonrondon.com/post.html"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="./src/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -222,6 +246,56 @@
       max-width: 380px;
       white-space: pre-line; /* Respects line breaks inside paragraphs */
     }
+
+    /* --- Acrostic Component --- */
+    .post-body.is-acrostic {
+      font-family: Georgia, 'Times New Roman', serif !important;
+      font-size: 19px !important;
+      line-height: 1.8;
+      color: #333331;
+      max-width: 550px !important;
+      margin: var(--space-6) auto !important;
+      padding: var(--space-6) var(--space-8) !important;
+      background-color: var(--color-lifted-cream);
+      border-radius: 24px;
+      box-shadow: var(--shadow-nav);
+      border: 1px solid rgba(20, 20, 19, 0.03);
+      text-align: center;
+    }
+
+    .post-body.is-acrostic p {
+      display: inline-block;
+      text-align: left;
+      margin-bottom: 28px !important;
+      width: 100%;
+      max-width: 380px;
+      white-space: pre-line;
+    }
+
+    @keyframes acrostic-pop {
+      0% {
+        transform: scale(0.8) translateY(2px);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .acrostic-letter {
+      display: inline-block;
+      font-style: normal !important;
+      font-size: 1.45em;
+      font-weight: 800;
+      color: var(--color-light-signal-orange);
+      font-family: var(--font-primary);
+      margin-right: 2px;
+      line-height: 0.9;
+      vertical-align: middle;
+      text-shadow: 0 2px 4px rgba(243, 115, 56, 0.15);
+      animation: acrostic-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
   </style>
 </head>
 <body>
@@ -383,7 +457,16 @@
 
         // Render Markdown content
         const contentElem = document.getElementById('article-content');
-        contentElem.innerHTML = marked.parse(postData.content || '');
+        let renderedHtml = marked.parse(postData.content || '');
+        const isAcrostic = !!postData.isAcrostic || (postData.category && postData.category.toLowerCase().includes('acrostic'));
+        if (isAcrostic) {
+          renderedHtml = applyAcrosticFormatting(renderedHtml);
+          contentElem.classList.add('is-acrostic');
+        } else {
+          contentElem.classList.remove('is-acrostic');
+        }
+        contentElem.innerHTML = renderedHtml;
+
         if (postData.isPoem) {
           contentElem.classList.add('is-poem');
         } else {
@@ -456,6 +539,33 @@
         const time = Math.max(1, Math.ceil(words / 225));
         document.getElementById('article-reading-time').innerText = `${time} min de lectura`;
       }
+    }
+
+    function applyAcrosticFormatting(html) {
+      if (!html) return html;
+      return html.replace(/<p>([\s\S]*?)<\/p>/gi, (pMatch, pContent) => {
+        const lines = pContent.split('\n');
+        let letterCount = 0;
+        const formattedLines = lines.map(line => {
+          const trimmed = line.trimStart();
+          if (!trimmed) return line;
+          if (/^(autor|escrito|by|poeta)\b/i.test(trimmed.replace(/<[^>]*>/g, ''))) {
+            return line;
+          }
+          const match = line.match(/^(\s*)(<[a-z0-9]+[^>]*>)?([A-Za-zÀ-ÖØ-öø-ÿ])/i);
+          if (match) {
+            letterCount++;
+            const delay = (letterCount * 0.1).toFixed(1);
+            const leadingSpaces = match[1];
+            const openingTag = match[2] || '';
+            const firstLetter = match[3];
+            const restOfLine = line.slice(match[0].length);
+            return `${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}`;
+          }
+          return line;
+        });
+        return `<p>${formattedLines.join('\n')}</p>`;
+      });
     }
 
     loadPost();

@@ -103,6 +103,20 @@ async function main() {
         `<meta name="twitter:description" content="${excerptText}">`
       );
 
+      // 2b. Replace JSON-LD Article structured data
+      html = html.replace(
+        '"headline": "Título del Artículo"',
+        `"headline": "${postData.title.replace(/"/g, '\\"')}"`
+      );
+      html = html.replace(
+        '"datePublished": "2026-01-01"',
+        `"datePublished": "${postData.date}"`
+      );
+      html = html.replace(
+        '"@id": "https://ramonrondon.com/post.html"',
+        `"@id": "https://ramonrondon.com/posts/${slug}.html"`
+      );
+
       // 3. Ocultar spinner y mostrar cuerpo del artículo
       html = html.replace(
         'style="text-align: center; padding: var(--space-12) 0;" id="loading-spinner"',
@@ -114,12 +128,21 @@ async function main() {
       );
 
       // 4. Inyectar detalles del artículo
-      if (postData.isPoem) {
-        html = html.replace(
-          '<section class="post-body" id="article-content">',
-          '<section class="post-body is-poem" id="article-content">'
-        );
+      let renderedContentHtml = contentHtml;
+      let bodyClasses = 'post-body';
+      const isAcrostic = !!postData.isAcrostic || (postData.category && postData.category.toLowerCase().includes('acrostic'));
+      if (isAcrostic) {
+        bodyClasses += ' is-acrostic';
+        renderedContentHtml = applyAcrosticFormatting(renderedContentHtml);
       }
+      if (postData.isPoem) {
+        bodyClasses += ' is-poem';
+      }
+      html = html.replace(
+        '<section class="post-body" id="article-content">',
+        `<section class="${bodyClasses}" id="article-content">`
+      );
+
       html = html.replace(
         '<span class="post-meta-tag" id="article-category">Categoría</span>',
         `<span class="post-meta-tag" id="article-category">${postData.category}</span>`
@@ -134,7 +157,7 @@ async function main() {
       );
       html = html.replace(
         '<!-- Markdown injection target -->',
-        () => contentHtml
+        () => renderedContentHtml
       );
 
       // 5. Ajustar rutas relativas de assets y páginas para que apunten a la carpeta padre (../)
@@ -168,3 +191,31 @@ async function main() {
 }
 
 main();
+
+function applyAcrosticFormatting(html) {
+  if (!html) return html;
+  return html.replace(/<p>([\s\S]*?)<\/p>/gi, (pMatch, pContent) => {
+    const lines = pContent.split('\n');
+    let letterCount = 0;
+    const formattedLines = lines.map(line => {
+      const trimmed = line.trimStart();
+      if (!trimmed) return line;
+      if (/^(autor|escrito|by|poeta)\b/i.test(trimmed.replace(/<[^>]*>/g, ''))) {
+        return line;
+      }
+      const match = line.match(/^(\s*)(<[a-z0-9]+[^>]*>)?([A-Za-zÀ-ÖØ-öø-ÿ])/i);
+      if (match) {
+        letterCount++;
+        const delay = (letterCount * 0.1).toFixed(1);
+        const leadingSpaces = match[1];
+        const openingTag = match[2] || '';
+        const firstLetter = match[3];
+        const restOfLine = line.slice(match[0].length);
+        return `${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}`;
+      }
+      return line;
+    });
+    return `<p>${formattedLines.join('\n')}</p>`;
+  });
+}
+
