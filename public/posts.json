@@ -13,7 +13,8 @@
     "date": "2026-06-12",
     "excerpt": "Mi Inspiracion Junio 1 de 2020",
     "category": "Poemas",
-    "isPoem": true
+    "isPoem": true,
+    "isAcrostic": false
   },
   {
     "title": "Como una Estrella",
