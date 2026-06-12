@@ -1,5 +1,13 @@
 [
   {
+    "title": "Como una Estrella",
+    "slug": "como-una-estrella",
+    "date": "2026-06-12",
+    "excerpt": "Inspiración marazo 2020",
+    "category": "Poemas",
+    "isPoem": true
+  },
+  {
     "title": "Mi Ventana",
     "slug": "mi-ventana",
     "date": "2026-06-12",
