@@ -227,6 +227,107 @@
       color: #1565C0;
       border: 1px solid #BBDEFB;
     }
+
+    /* Help Button and Modal */
+    .help-btn {
+      background: none;
+      border: 1.5px solid var(--color-slate-gray);
+      color: var(--color-slate-gray);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      transition: var(--transition-smooth);
+      padding: 0;
+    }
+
+    .help-btn:hover {
+      border-color: var(--color-light-signal-orange);
+      color: var(--color-light-signal-orange);
+      background-color: rgba(243, 115, 56, 0.05);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(20, 20, 19, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: var(--color-white);
+      border-radius: 24px;
+      padding: var(--space-6);
+      max-width: 600px;
+      width: 90%;
+      box-shadow: var(--shadow-card);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      text-align: left;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-card h3 {
+      margin-top: 0;
+      margin-bottom: var(--space-3);
+      border-bottom: 1.5px solid rgba(20, 20, 19, 0.05);
+      padding-bottom: 12px;
+    }
+
+    .modal-body {
+      max-height: 400px;
+      overflow-y: auto;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-ink-black);
+    }
+
+    .modal-section {
+      margin-bottom: var(--space-4);
+    }
+
+    .modal-section h4 {
+      color: var(--color-light-signal-orange);
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .code-example {
+      background-color: var(--color-canvas-cream);
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      margin-top: 8px;
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
@@ -322,7 +423,10 @@
           </div>
 
           <div class="form-group">
-            <label for="post-content">Contenido (Markdown - Puedes pegar o arrastrar imágenes aquí)</label>
+            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+              <label for="post-content" style="margin-bottom: 0;">Contenido (Markdown)</label>
+              <button type="button" id="btn-editor-help" class="help-btn" title="Ver guía de formato">?</button>
+            </div>
             <div class="editor-layout">
               <textarea id="post-content" class="form-control editor-textarea" required placeholder="Escribe tu contenido aquí usando Markdown..."></textarea>
               <div class="preview-pane" id="preview-pane">
@@ -528,6 +632,26 @@
 
     btnCancel.addEventListener('click', () => {
       resetEditor();
+    });
+
+    // Help Modal Handler
+    const btnEditorHelp = document.getElementById('btn-editor-help');
+    const helpModal = document.getElementById('help-modal');
+    const btnCloseHelp = document.getElementById('btn-close-help');
+
+    btnEditorHelp.addEventListener('click', () => {
+      helpModal.classList.add('active');
+    });
+
+    btnCloseHelp.addEventListener('click', () => {
+      helpModal.classList.remove('active');
+    });
+
+    // Close modal if clicked outside the card
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) {
+        helpModal.classList.remove('active');
+      }
     });
 
     // Save and Publish Handler
@@ -879,5 +1003,49 @@
       element.style.display = 'block';
     }
   </script>
+
+  <!-- Help Modal -->
+  <div id="help-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3>Guía de Formato Especial</h3>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>📷 Insertar Imágenes</h4>
+          <p>
+            Puedes pegar imágenes directamente desde tu portapapeles o arrastrarlas al editor:
+          </p>
+          <ul>
+            <li><strong>Copiar y Pegar:</strong> Copia cualquier imagen en tu portapapeles y presiona <code>Ctrl + V</code> dentro del editor de contenido.</li>
+            <li><strong>Arrastrar y Soltar:</strong> Arrastra un archivo de imagen desde tu computadora y suéltalo dentro del editor.</li>
+          </ul>
+          <p style="margin-top: 8px; font-size: 13px; color: var(--color-slate-gray);">
+            <em>Nota: Las imágenes se guardan de forma temporal en tu navegador y se suben permanentemente a tu repositorio de GitHub solo cuando haces clic en "Guardar y Publicar".</em>
+          </p>
+        </div>
+
+        <div class="modal-section" style="margin-top: 24px;">
+          <h4>📐 Fórmulas Matemáticas (LaTeX)</h4>
+          <p>
+            El blog soporta fórmulas matemáticas con la notación de LaTeX usando la librería KaTeX:
+          </p>
+          <ul>
+            <li>
+              <strong>Fórmula en línea (Inline):</strong> Rodea la fórmula con un solo símbolo de dólar <code>$</code>. 
+              <br>Ejemplo: <code>$a^2 + b^2 = c^2$</code>. Se verá integrada en el texto.
+            </li>
+            <li>
+              <strong>Fórmula en bloque (Destacada):</strong> Rodea la fórmula con dos símbolos de dólar <code>$$</code>. 
+              <br>Ejemplo:
+              <span class="code-example">$$ c = \sqrt{a^2 + b^2} $$</span>
+              Se mostrará en su propio bloque con el diseño de **hoja cuadriculada rasgada de cuaderno**.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top: 24px;">
+        <button id="btn-close-help" class="btn-primary" type="button">Entendido</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
