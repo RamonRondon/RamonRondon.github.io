@@ -1,5 +1,13 @@
 [
   {
+    "title": "Mi Ventana",
+    "slug": "mi-ventana",
+    "date": "2026-06-12",
+    "excerpt": "Mi inspiración febrero 2020",
+    "category": "Poemas",
+    "isPoem": true
+  },
+  {
     "title": "Mi Balcón",
     "slug": "mi-balcn",
     "date": "2026-06-12",
