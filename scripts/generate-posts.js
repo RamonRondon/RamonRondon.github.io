@@ -128,7 +128,7 @@ async function main() {
       );
       html = html.replace(
         '<!-- Markdown injection target -->',
-        contentHtml
+        () => contentHtml
       );
 
       // 5. Ajustar rutas relativas de assets y páginas para que apunten a la carpeta padre (../)
