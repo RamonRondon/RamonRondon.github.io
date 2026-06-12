@@ -826,6 +826,15 @@ h3 {
   line-height: 1.5;
 }
 
+/* About Page Specific Layout Adjustments */
+#contacto-directo {
+  padding-top: 180px;
+}
+
+#contacto-directo .ghost-watermark {
+  top: 80px;
+}
+
 /* --- Responsive Adaptations --- */
 
 @media (max-width: 1024px) {
