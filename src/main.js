@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = circle.querySelector('.hero-avatar-video');
     if (video) {
       circle.addEventListener('mouseenter', () => {
-        // Only play video if QR is not active
-        if (!circle.classList.contains('qr-active')) {
+        // Only play video if QR is not active and it hasn't finished
+        const hasEnded = video.ended || (video.duration && video.currentTime >= video.duration - 0.1);
+        if (!circle.classList.contains('qr-active') && !hasEnded) {
           video.play().catch(e => console.warn("Video play interrupted:", e));
         }
       });
       circle.addEventListener('mouseleave', () => {
         video.pause();
-        video.currentTime = 0;
       });
     }
   });
