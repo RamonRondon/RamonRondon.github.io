@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "jimp": "^1.6.1",
     "marked": "^18.0.5",
     "vite": "^6.0.0"
   }
