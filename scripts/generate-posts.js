@@ -136,6 +136,8 @@ async function main() {
         // En desarrollo, las rutas a los archivos fuente son ./src/
         html = html.replace(/src="\.\/src\//g, 'src="../src/');
         html = html.replace(/href="\.\/src\//g, 'href="../src/');
+        // Las imágenes de public/assets deben apuntar a ../public/assets/ en desarrollo
+        html = html.replace(/src="\.\/assets\//g, 'src="../public/assets/');
       } else {
         // En producción, las rutas compiladas son ./assets/
         html = html.replace(/src="\.\/assets\//g, 'src="../assets/');
