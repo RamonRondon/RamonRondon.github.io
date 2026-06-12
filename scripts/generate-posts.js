@@ -201,7 +201,7 @@ function applyAcrosticFormatting(html) {
       const trimmed = line.trimStart();
       if (!trimmed) return line;
       if (/^(autor|escrito|by|poeta)\b/i.test(trimmed.replace(/<[^>]*>/g, ''))) {
-        return line;
+        return `<span class="acrostic-line">${line}</span>`;
       }
       const match = line.match(/^(\s*)(<[a-z0-9]+[^>]*>)?([A-Za-zÀ-ÖØ-öø-ÿ])/i);
       if (match) {
@@ -211,9 +211,9 @@ function applyAcrosticFormatting(html) {
         const openingTag = match[2] || '';
         const firstLetter = match[3];
         const restOfLine = line.slice(match[0].length);
-        return `${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}`;
+        return `<span class="acrostic-line">${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}</span>`;
       }
-      return line;
+      return `<span class="acrostic-line">${line}</span>`;
     });
     return `<p>${formattedLines.join('\n')}</p>`;
   });

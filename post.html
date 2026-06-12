@@ -272,6 +272,13 @@
       white-space: pre-line;
     }
 
+    .acrostic-line {
+      display: block;
+      position: relative;
+      padding-left: 28px; /* Sangría fija para alinear el texto de todos los versos */
+      min-height: 1.8em;
+    }
+
     @keyframes acrostic-pop {
       0% {
         transform: scale(0.8) translateY(2px);
@@ -284,15 +291,18 @@
     }
 
     .acrostic-letter {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      text-align: center;
       display: inline-block;
       font-style: normal !important;
       font-size: 1.45em;
       font-weight: 800;
       color: var(--color-light-signal-orange);
       font-family: var(--font-primary);
-      margin-right: 2px;
-      line-height: 0.9;
-      vertical-align: middle;
+      line-height: 1.1; /* Alinea con la línea de base del texto Georgia */
       text-shadow: 0 2px 4px rgba(243, 115, 56, 0.15);
       animation: acrostic-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
@@ -550,7 +560,7 @@
           const trimmed = line.trimStart();
           if (!trimmed) return line;
           if (/^(autor|escrito|by|poeta)\b/i.test(trimmed.replace(/<[^>]*>/g, ''))) {
-            return line;
+            return `<span class="acrostic-line">${line}</span>`;
           }
           const match = line.match(/^(\s*)(<[a-z0-9]+[^>]*>)?([A-Za-zÀ-ÖØ-öø-ÿ])/i);
           if (match) {
@@ -560,9 +570,9 @@
             const openingTag = match[2] || '';
             const firstLetter = match[3];
             const restOfLine = line.slice(match[0].length);
-            return `${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}`;
+            return `<span class="acrostic-line">${leadingSpaces}${openingTag}<span class="acrostic-letter" style="animation-delay: ${delay}s">${firstLetter}</span>${restOfLine}</span>`;
           }
-          return line;
+          return `<span class="acrostic-line">${line}</span>`;
         });
         return `<p>${formattedLines.join('\n')}</p>`;
       });
