@@ -1,4 +1,6 @@
 // Ramón Rondón Portfolio Interactions
+import { getProfileData, buildVCard, generateQRElement, renderAboutPage } from './profile-loader.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
@@ -26,7 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = circle.querySelector('.hero-avatar-video');
     if (video) {
       circle.addEventListener('mouseenter', () => {
-        video.play().catch(e => console.warn("Video play interrupted:", e));
+        // Only play video if QR is not active
+        if (!circle.classList.contains('qr-active')) {
+          video.play().catch(e => console.warn("Video play interrupted:", e));
+        }
       });
       circle.addEventListener('mouseleave', () => {
         video.pause();
@@ -37,6 +42,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Orbit Line Drawing/Animation Setup
   setupOrbits();
+
+  // QR Toggle
+  const qrToggleBtn = document.getElementById('hero-qr-toggle');
+  const qrContainer = document.getElementById('hero-qr-container');
+  const portraitCircle = document.querySelector('.hero-portrait-circle');
+
+  if (qrToggleBtn && qrContainer && portraitCircle) {
+    let qrGenerated = false;
+    let qrActive = false;
+
+    qrToggleBtn.addEventListener('click', async () => {
+      if (!qrGenerated) {
+        const data = await getProfileData();
+        const vcard = buildVCard(data);
+        const qrEl = generateQRElement(vcard);
+        qrContainer.appendChild(qrEl);
+        qrGenerated = true;
+      }
+
+      qrActive = !qrActive;
+      portraitCircle.classList.toggle('qr-active', qrActive);
+      qrContainer.classList.toggle('active', qrActive);
+
+      const qrIcon = qrToggleBtn.querySelector('.qr-icon');
+      const photoIcon = qrToggleBtn.querySelector('.photo-icon');
+      if (qrIcon && photoIcon) {
+        qrIcon.style.display = qrActive ? 'none' : 'block';
+        photoIcon.style.display = qrActive ? 'block' : 'none';
+      }
+
+      qrToggleBtn.setAttribute('aria-label', qrActive ? 'Show photo' : 'Show QR code');
+    });
+  }
+
+  // About page dynamic rendering
+  if (document.getElementById('contacto-directo')) {
+    getProfileData()
+      .then(data => renderAboutPage(data))
+      .catch(e => console.warn('Profile data not loaded:', e));
+  }
 });
 
 function setupOrbits() {

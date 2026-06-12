@@ -1,0 +1,35 @@
+{
+  "name": {
+    "first": "Ramón",
+    "last": "Rondón Montañez",
+    "full": "Ramón Rondón Montañez"
+  },
+  "title": "Matemático y Empresario",
+  "phone": "+573175140755",
+  "email": "ramonrondon@gmail.com",
+  "location": {
+    "city": "Bucaramanga",
+    "country": "Colombia"
+  },
+  "website": "https://ramonrondon.com",
+  "avatar": "https://avatars.githubusercontent.com/u/292628141?v=4",
+  "github": "https://github.com/RamonRondon",
+  "education": [
+    {
+      "level": "Pregrado",
+      "degree": "Licenciatura en Matemáticas",
+      "institution": "Universidad Industrial de Santander (UIS)",
+      "description": "Estudios con rigurosidad académica enfocados en álgebra abstracta, cálculo avanzado, lógica cuantitativa y métodos numéricos aplicados a problemas complejos."
+    },
+    {
+      "level": "Estudios de Posgrado",
+      "degree": "Especialización en Multimedia Educativa",
+      "institution": "Universidad Antonio Nariño (UAN)",
+      "description": "Formación avanzada destinada al análisis estratégico, la resolución estructurada de problemas metodológicos y la planeación de proyectos."
+    }
+  ],
+  "professional": {
+    "experience": "+10 Años",
+    "description": "Desarrollando modelos cuantitativos para negocios complejos."
+  }
+}

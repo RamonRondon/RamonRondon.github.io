@@ -71,11 +71,26 @@
           <div class="hero-portrait-circle">
             <img src="./src/assets/profile.jpeg" alt="Ramón Rondón - Studio Ghibli Style" class="hero-avatar-img">
             <video src="./src/assets/hove_me_short.mp4" muted playsinline class="hero-avatar-video"></video>
+            <div class="hero-qr-overlay" id="hero-qr-container"></div>
           </div>
-          <!-- Satellite Arrow Button -->
-          <a href="#education" class="hero-satellite" aria-label="Ir a educación">
-            →
-          </a>
+          <!-- QR Toggle Button -->
+          <button type="button" class="hero-satellite" id="hero-qr-toggle" aria-label="Show QR code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="qr-icon">
+              <rect x="2" y="2" width="8" height="8" rx="1"/>
+              <rect x="14" y="2" width="8" height="8" rx="1"/>
+              <rect x="2" y="14" width="8" height="8" rx="1"/>
+              <rect x="14" y="14" width="4" height="4" rx="0.5"/>
+              <line x1="22" y1="14" x2="22" y2="14.01"/>
+              <line x1="22" y1="22" x2="22" y2="22.01"/>
+              <line x1="18" y1="22" x2="18" y2="22.01"/>
+              <line x1="18" y1="18" x2="18" y2="18.01"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="photo-icon" style="display:none">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -249,7 +264,7 @@
           <ul class="footer-links">
             <li><a href="mailto:ramonrondon@gmail.com">Email ↗</a></li>
             <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a></li>
+            <li><a href="https://github.com/RamonRondon" target="_blank" rel="noopener">GitHub ↗</a></li>
           </ul>
         </div>
       </div>

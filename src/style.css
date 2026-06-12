@@ -849,6 +849,63 @@ h3 {
   opacity: 1;
 }
 
+/* --- QR Toggle Overlay --- */
+.hero-qr-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in-out;
+  padding: 15%;
+}
+
+.hero-qr-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-qr-overlay .hero-qr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Disable video hover when QR is active */
+.hero-portrait-circle.qr-active:hover .hero-avatar-img {
+  opacity: 1;
+}
+
+.hero-portrait-circle.qr-active:hover .hero-avatar-video {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Toggle button states */
+.hero-satellite {
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-smooth);
+}
+
+.hero-satellite:hover {
+  background-color: var(--color-ink-black);
+  color: var(--color-white);
+  transform: translate(20%, 20%) scale(1.1);
+}
+
+.hero-satellite:active {
+  transform: translate(20%, 20%) scale(0.95);
+}
+
 /* --- Responsive Adaptations --- */
 
 @media (max-width: 1024px) {
@@ -867,6 +924,10 @@ h3 {
   
   .hero-portrait-circle {
     width: 60%;
+  }
+
+  .hero-qr-overlay {
+    padding: 18%;
   }
 
   .facets-grid {
