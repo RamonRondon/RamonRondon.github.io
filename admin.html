@@ -19,7 +19,7 @@
     }
 
     .admin-container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 120px auto var(--space-12);
       width: 100%;
       padding: 0 var(--space-3);
@@ -75,15 +75,45 @@
 
     /* Dashboard Layout */
     .dashboard-grid {
-      display: grid;
-      grid-template-columns: 350px 1fr;
+      display: flex;
       gap: var(--space-6);
       align-items: start;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-panel {
+      width: 300px;
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .dashboard-grid.sidebar-collapsed .sidebar-panel {
+      width: 0;
+      min-width: 0;
+      padding: 0;
+      margin-right: calc(-1 * var(--space-6));
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: none;
+      border: none;
+    }
+
+    .editor-panel {
+      flex: 1;
+      min-width: 0;
     }
 
     @media (max-width: 900px) {
       .dashboard-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar-panel {
+        width: 100% !important;
+        margin-right: 0 !important;
+      }
+      .dashboard-grid.sidebar-collapsed .sidebar-panel {
+        display: none;
       }
     }
 
@@ -262,6 +292,57 @@
       background-color: rgba(243, 115, 56, 0.05);
     }
 
+    /* Math Toolbar styling */
+    .math-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 12px;
+      background-color: var(--color-lifted-cream);
+      border: 1.5px solid rgba(20, 20, 19, 0.1);
+      border-bottom: none;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      align-items: center;
+    }
+
+    .math-toolbar-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--color-slate-gray);
+      margin-right: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .math-toolbar-btn {
+      background-color: var(--color-white);
+      border: 1px solid rgba(20, 20, 19, 0.15);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-ink-black);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+      min-height: 32px;
+    }
+
+    .math-toolbar-btn:hover {
+      background-color: var(--color-canvas-cream);
+      border-color: var(--color-light-signal-orange);
+      color: var(--color-light-signal-orange);
+      transform: translateY(-1px);
+    }
+
+    .editor-textarea-with-toolbar {
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+    }
+
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -415,7 +496,7 @@
     <!-- Dashboard Screen -->
     <div id="dashboard-screen" class="dashboard-grid" style="display: none;">
       <!-- Sidebar List -->
-      <div class="panel-card">
+      <div class="panel-card sidebar-panel" id="sidebar-panel">
         <div class="panel-header">
           <h3>Tus Artículos</h3>
           <button id="btn-new" class="btn-primary" style="padding: 6px 16px; font-size: 14px;">+ Nuevo</button>
@@ -426,10 +507,19 @@
       </div>
 
       <!-- Editor Panel -->
-      <div class="panel-card" style="flex: 1;">
+      <div class="panel-card editor-panel">
         <div class="status-alert" id="editor-status"></div>
         
-        <h3 id="editor-title-text" style="margin-bottom: 20px;">Nuevo Artículo</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 id="editor-title-text" style="margin: 0;">Nuevo Artículo</h3>
+          <button id="btn-toggle-sidebar" class="btn-secondary" style="padding: 6px 12px; font-size: 14px; display: flex; align-items: center; gap: 6px;" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+            </svg>
+            <span id="toggle-sidebar-text">Ocultar Artículos</span>
+          </button>
+        </div>
         
         <form id="editor-form" onsubmit="return false;">
           <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-4);">
@@ -470,7 +560,22 @@
               <button type="button" id="btn-editor-help" class="help-btn" title="Ver guía de formato">?</button>
             </div>
             <div class="editor-layout">
-              <textarea id="post-content" class="form-control editor-textarea" required placeholder="Escribe tu contenido aquí usando Markdown..."></textarea>
+              <div style="display: flex; flex-direction: column;">
+                <div class="math-toolbar">
+                  <span class="math-toolbar-label">Insertar fórmula:</span>
+                  <button type="button" class="math-toolbar-btn" data-type="block" title="Bloque destacado (hoja de cuaderno)"><span class="math-render">$$ ... $$</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="inline" title="Fórmula en línea (inline)"><span class="math-render">$ ... $</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="fraction" title="Fracción: \frac{a}{b}"><span class="math-render">\frac{a}{b}</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="sqrt" title="Raíz cuadrada: \sqrt{x}"><span class="math-render">\sqrt{x}</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="pow" title="Potencia/Superíndice: x^{y}"><span class="math-render">x^{y}</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="sub" title="Subíndice: x_{i}"><span class="math-render">x_{i}</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="sum" title="Sumatoria: \sum"><span class="math-render">\sum</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="int" title="Integral: \int"><span class="math-render">\int</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="lim" title="Límite: \lim"><span class="math-render">\lim</span></button>
+                  <button type="button" class="math-toolbar-btn" data-type="matrix" title="Matriz"><span class="math-render">\begin{matrix} a & b \\ c & d \end{matrix}</span></button>
+                </div>
+                <textarea id="post-content" class="form-control editor-textarea editor-textarea-with-toolbar" required placeholder="Escribe tu contenido aquí usando Markdown..."></textarea>
+              </div>
               <div class="preview-pane" id="preview-pane">
                 <span style="color: var(--color-slate-gray); font-style: italic;">Vista previa en tiempo real...</span>
               </div>
@@ -520,6 +625,106 @@
     const postIsPoem = document.getElementById('post-is-poem');
     const previewPane = document.getElementById('preview-pane');
     const editorTitleText = document.getElementById('editor-title-text');
+
+    // Sidebar toggle logic
+    const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
+    const toggleSidebarText = document.getElementById('toggle-sidebar-text');
+    
+    // Load persisted state
+    const isSidebarCollapsed = localStorage.getItem('blog_sidebar_collapsed') === 'true';
+    if (isSidebarCollapsed) {
+      dashboardScreen.classList.add('sidebar-collapsed');
+      if (toggleSidebarText) toggleSidebarText.innerText = 'Mostrar Artículos';
+    }
+    
+    if (btnToggleSidebar) {
+      btnToggleSidebar.addEventListener('click', () => {
+        const collapsed = dashboardScreen.classList.toggle('sidebar-collapsed');
+        localStorage.setItem('blog_sidebar_collapsed', collapsed);
+        if (toggleSidebarText) toggleSidebarText.innerText = collapsed ? 'Mostrar Artículos' : 'Ocultar Artículos';
+      });
+    }
+
+    // Helper to insert text at cursor in textarea
+    function insertAtCursor(textarea, textBefore, textAfter = '') {
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+      const originalValue = textarea.value;
+      const selectedText = originalValue.substring(startPos, endPos);
+      
+      const replacement = textBefore + (selectedText || textAfter) + (selectedText ? textAfter : '');
+      
+      textarea.value = originalValue.substring(0, startPos) + 
+                       replacement + 
+                       originalValue.substring(endPos);
+      
+      textarea.focus();
+      const newCursorPos = startPos + textBefore.length + (selectedText ? selectedText.length + textAfter.length : 0);
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+      
+      textarea.dispatchEvent(new Event('input'));
+    }
+
+    // Math Toolbar Button Click Handler
+    document.querySelectorAll('.math-toolbar-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const type = btn.getAttribute('data-type');
+        
+        switch (type) {
+          case 'block':
+            insertAtCursor(postContent, '$$\n', '\n$$');
+            break;
+          case 'inline':
+            insertAtCursor(postContent, '$', '$');
+            break;
+          case 'fraction':
+            insertAtCursor(postContent, '\\frac{', '}{}');
+            break;
+          case 'sqrt':
+            insertAtCursor(postContent, '\\sqrt{', '}');
+            break;
+          case 'pow':
+            insertAtCursor(postContent, '^{', '}');
+            break;
+          case 'sub':
+            insertAtCursor(postContent, '_{', '}');
+            break;
+          case 'sum':
+            insertAtCursor(postContent, '\\sum_{i=1}^{n} ', '');
+            break;
+          case 'int':
+            insertAtCursor(postContent, '\\int_{a}^{b} ', ' \\,dx');
+            break;
+          case 'lim':
+            insertAtCursor(postContent, '\\lim_{x \\to \\infty} ', '');
+            break;
+          case 'matrix':
+            insertAtCursor(postContent, '\\begin{matrix}\n  a & b \\\\\n  c & d\n\\end{matrix}');
+            break;
+        }
+      });
+    });
+
+    // Render math symbols in the math toolbar
+    function renderToolbarMath() {
+      document.querySelectorAll('.math-toolbar .math-render').forEach(el => {
+        try {
+          if (typeof katex === 'object' && typeof katex.render === 'function') {
+            katex.render(el.textContent, el, { throwOnError: false, displayMode: false });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+    
+    // Call render once library is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderToolbarMath);
+    } else {
+      renderToolbarMath();
+    }
 
     // Init App
     if (gitToken) {
@@ -949,7 +1154,7 @@
     // Helper functions
     async function showDashboard() {
       authScreen.style.display = 'none';
-      dashboardScreen.style.display = 'grid';
+      dashboardScreen.style.display = 'flex';
       btnLogout.style.display = 'inline-block';
       resetEditor();
       await loadPostsList();
