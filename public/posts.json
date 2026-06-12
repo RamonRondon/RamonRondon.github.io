@@ -1,5 +1,14 @@
 [
   {
+    "title": "HAY DÍAS",
+    "slug": "hay-dias",
+    "date": "2026-06-12",
+    "excerpt": "Inspiración frente al computador, mayo de 2020",
+    "category": "Poemas",
+    "isPoem": true,
+    "isAcrostic": false
+  },
+  {
     "title": "MUJER",
     "slug": "mujer",
     "date": "2026-06-12",
