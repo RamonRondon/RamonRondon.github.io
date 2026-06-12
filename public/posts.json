@@ -35,9 +35,10 @@
     "title": "Mi Balcón",
     "slug": "mi-balcn",
     "date": "2026-06-12",
-    "excerpt": "Inspiracion de Junio 1 de 2020",
+    "excerpt": "Inspiracion de Noviembre 3 de 2021",
     "category": "Poemas",
-    "isPoem": true
+    "isPoem": true,
+    "isAcrostic": false
   },
   {
     "title": "Prueba 1",
