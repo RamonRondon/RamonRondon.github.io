@@ -835,6 +835,20 @@ h3 {
   top: 80px;
 }
 
+/* Hidden admin entry dot */
+.admin-trigger {
+  color: #FFC107 !important;
+  opacity: 0.6;
+  font-size: 16px;
+  text-decoration: none;
+  margin-left: 4px;
+  transition: opacity var(--transition-smooth);
+}
+
+.admin-trigger:hover {
+  opacity: 1;
+}
+
 /* --- Responsive Adaptations --- */
 
 @media (max-width: 1024px) {
