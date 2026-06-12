@@ -1012,10 +1012,16 @@ h3 {
   }
 
   .nav-cta {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
     gap: 0;
   }
 
   .nav-pill {
+    position: relative;
+    justify-content: center;
     padding: 8px 24px;
   }
 
