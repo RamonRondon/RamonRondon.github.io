@@ -1,5 +1,12 @@
 [
   {
+    "title": "Prurba 1",
+    "slug": "prurba-1",
+    "date": "2026-06-12",
+    "excerpt": "explicando regkla de tres compuesta",
+    "category": "Clase"
+  },
+  {
     "title": "La intersección de las Matemáticas y el Emprendimiento",
     "slug": "matematicas-y-emprendimiento",
     "date": "2026-06-11",
