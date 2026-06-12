@@ -177,17 +177,32 @@
       grid-template-columns: 1fr 1fr;
       gap: var(--space-4);
       margin-top: var(--space-4);
+      height: calc(100vh - 560px);
+      min-height: 500px;
+    }
+
+    .editor-layout > div {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     @media (max-width: 768px) {
       .editor-layout {
         grid-template-columns: 1fr;
+        height: auto;
+        min-height: auto;
+      }
+      .editor-layout > div {
+        height: auto;
       }
     }
 
     .editor-textarea {
       font-family: 'Courier New', Courier, monospace;
-      min-height: 400px;
+      flex: 1;
+      height: 100%;
+      min-height: 450px;
       resize: vertical;
       font-size: 15px;
       line-height: 1.5;
@@ -198,7 +213,8 @@
       border-radius: 12px;
       padding: var(--space-4);
       background-color: var(--color-white);
-      height: 400px;
+      height: 100%;
+      min-height: 450px;
       overflow-y: auto;
       font-size: 16px;
       line-height: 1.6;
