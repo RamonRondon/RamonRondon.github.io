@@ -23,6 +23,9 @@
 
   <link rel="icon" type="image/png" href="./src/assets/logo_1.png">
   <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     .post-wrapper {
@@ -314,9 +317,10 @@
       const spinner = document.getElementById('loading-spinner');
       const article = document.getElementById('article-body');
 
-      // Si la página ya está pre-renderizada (el artículo es visible), no hacemos nada más que calcular lectura
+      // Si la página ya está pre-renderizada (el artículo es visible), no hacemos nada más que calcular lectura y procesar fórmulas
       if (article && article.style.display === 'block') {
         calculateReadingTime();
+        renderMath();
         return;
       }
 
@@ -347,13 +351,27 @@
 
         // Calculate reading time
         calculateReadingTime();
-
+        renderMath();
+ 
         // Switch screens
         spinner.style.display = 'none';
         article.style.display = 'block';
 
       } catch (err) {
         showErrorPage('El artículo que buscas no existe o ha sido removido.');
+      }
+    }
+
+    function renderMath() {
+      const content = document.getElementById('article-content');
+      if (content && typeof renderMathInElement === 'function') {
+        renderMathInElement(content, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
       }
     }
 

@@ -1073,3 +1073,82 @@ h3 {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Math Formulas & Notebook Paper Component --- */
+
+/* Block equations styled as torn grid paper */
+.katex-display {
+  position: relative;
+  background-color: #fcfbfa; /* Off-white canvas paper */
+  background-image: 
+    linear-gradient(rgba(186, 218, 253, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186, 218, 253, 0.4) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center;
+  
+  border-left: 1px solid rgba(0, 0, 0, 0.04);
+  border-right: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 
+    0 12px 28px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.03),
+    inset 0 0 30px rgba(0, 0, 0, 0.01);
+  
+  padding: 45px 24px 25px 64px; /* Space for labels and the red margin */
+  margin: var(--space-4) auto;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 4px;
+  text-align: left !important; /* Handwritten equations start from the margin */
+  overflow-x: auto;
+  
+  /* Ripped jagged top/bottom edges */
+  clip-path: polygon(
+    0% 4px, 1.5% 0px, 3% 3px, 4.5% 1px, 6% 4px, 7.5% 0px, 9% 3px, 10.5% 1px, 12% 4px, 13.5% 0px, 15% 3px, 16.5% 1px, 18% 4px, 19.5% 0px, 21% 3px, 22.5% 1px, 24% 4px, 25.5% 0px, 27% 3px, 28.5% 1px, 30% 4px, 31.5% 0px, 33% 3px, 34.5% 1px, 36% 4px, 37.5% 0px, 39% 3px, 40.5% 1px, 42% 4px, 43.5% 0px, 45% 3px, 46.5% 1px, 48% 4px, 49.5% 0px, 51% 3px, 52.5% 1px, 54% 4px, 55.5% 0px, 57% 3px, 58.5% 1px, 60% 4px, 61.5% 0px, 63% 3px, 64.5% 1px, 66% 4px, 67.5% 0px, 69% 3px, 70.5% 1px, 72% 4px, 73.5% 0px, 75% 3px, 76.5% 1px, 78% 4px, 79.5% 0px, 81% 3px, 82.5% 1px, 84% 4px, 85.5% 0px, 87% 3px, 88.5% 1px, 90% 4px, 91.5% 0px, 93% 3px, 94.5% 1px, 96% 4px, 97.5% 0px, 99% 3px, 100% 1px,
+    100% 100%,
+    100% calc(100% - 4px), 98.5% 100%, 97% calc(100% - 3px), 95.5% calc(100% - 1px), 94% calc(100% - 4px), 92.5% 100%, 91% calc(100% - 3px), 89.5% calc(100% - 1px), 88% calc(100% - 4px), 86.5% 100%, 85% calc(100% - 3px), 83.5% calc(100% - 1px), 82% calc(100% - 4px), 80.5% 100%, 79% calc(100% - 3px), 77.5% calc(100% - 1px), 76% calc(100% - 4px), 74.5% 100%, 73% calc(100% - 3px), 71.5% calc(100% - 1px), 70% calc(100% - 4px), 68.5% 100%, 67% calc(100% - 3px), 65.5% calc(100% - 1px), 64% calc(100% - 4px), 62.5% 100%, 61% calc(100% - 3px), 59.5% calc(100% - 1px), 58% calc(100% - 4px), 56.5% 100%, 55% calc(100% - 3px), 53.5% calc(100% - 1px), 52% calc(100% - 4px), 50.5% 100%, 49% calc(100% - 3px), 47.5% calc(100% - 1px), 46% calc(100% - 4px), 44.5% 100%, 43% calc(100% - 3px), 41.5% calc(100% - 1px), 40% calc(100% - 4px), 38.5% 100%, 37% calc(100% - 3px), 35.5% calc(100% - 1px), 34% calc(100% - 4px), 32.5% 100%, 31% calc(100% - 3px), 29.5% calc(100% - 1px), 28% calc(100% - 4px), 26.5% 100%, 25% calc(100% - 3px), 23.5% calc(100% - 1px), 22% calc(100% - 4px), 20.5% 100%, 19% calc(100% - 3px), 17.5% calc(100% - 1px), 16% calc(100% - 4px), 14.5% 100%, 13% calc(100% - 3px), 11.5% calc(100% - 1px), 10% calc(100% - 4px), 8.5% 100%, 7% calc(100% - 3px), 5.5% calc(100% - 1px), 4% calc(100% - 4px), 2.5% 100%, 0% calc(100% - 4px)
+  );
+}
+
+/* Notebook Header Label */
+.katex-display::before {
+  content: "FÓRMULA / ANÁLISIS";
+  position: absolute;
+  top: 14px;
+  left: 64px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(56, 96, 190, 0.6); /* Soft blue matching theme accent */
+  border-bottom: 1px dashed rgba(56, 96, 190, 0.2);
+  padding-bottom: 2px;
+}
+
+/* Vertical pink margin line */
+.katex-display::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 48px;
+  width: 1.5px;
+  background-color: rgba(239, 83, 80, 0.45); /* Classic notebook red margin line */
+}
+
+/* Ensure equation stays inside the lines and looks handwritten */
+.katex-display > .katex {
+  display: inline-block !important;
+  text-align: left;
+  padding-left: 0px;
+  margin: 0 !important;
+  color: #1a1a19; /* Slightly softer than pure black to look like ink */
+  font-size: 1.15em;
+}
+
+/* Custom styling for inline math to highlight it slightly */
+.katex-inline {
+  background-color: rgba(56, 96, 190, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
