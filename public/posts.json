@@ -19,9 +19,10 @@
     "title": "Como una Estrella",
     "slug": "como-una-estrella",
     "date": "2026-06-12",
-    "excerpt": "Inspiración marazo 2020",
+    "excerpt": "Inspiración octubre 23 de 2021",
     "category": "Poemas",
-    "isPoem": true
+    "isPoem": true,
+    "isAcrostic": false
   },
   {
     "title": "Mi Ventana",
