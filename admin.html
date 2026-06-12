@@ -962,18 +962,24 @@
       }
     });
 
-    // Toggle is-poem and is-acrostic classes on preview pane in real-time
+    // Toggle is-poem and is-acrostic classes on preview pane in real-time (mutually exclusive)
     postIsPoem.addEventListener('change', () => {
       if (postIsPoem.checked) {
+        postIsAcrostic.checked = false;
         previewPane.classList.add('is-poem');
+        previewPane.classList.remove('is-acrostic');
       } else {
         previewPane.classList.remove('is-poem');
       }
+      // Re-trigger preview update to re-evaluate acrostic wrapping
+      postContent.dispatchEvent(new Event('input'));
     });
 
     postIsAcrostic.addEventListener('change', () => {
       if (postIsAcrostic.checked) {
+        postIsPoem.checked = false;
         previewPane.classList.add('is-acrostic');
+        previewPane.classList.remove('is-poem');
       } else {
         previewPane.classList.remove('is-acrostic');
       }
@@ -1365,17 +1371,17 @@
         postDate.value = postData.date;
         postExcerpt.value = postData.excerpt;
         postContent.value = postData.content;
-        postIsPoem.checked = !!postData.isPoem;
         const isAcrostic = !!postData.isAcrostic || (postData.category && postData.category.toLowerCase().includes('acrostic'));
         postIsAcrostic.checked = isAcrostic;
+        postIsPoem.checked = isAcrostic ? false : !!postData.isPoem;
         
         // Update preview pane classes
-        if (postData.isPoem) {
+        if (postIsPoem.checked) {
           previewPane.classList.add('is-poem');
         } else {
           previewPane.classList.remove('is-poem');
         }
-        if (isAcrostic) {
+        if (postIsAcrostic.checked) {
           previewPane.classList.add('is-acrostic');
         } else {
           previewPane.classList.remove('is-acrostic');
