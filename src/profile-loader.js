@@ -1,20 +1,12 @@
 import qrcode from 'qrcode-generator';
-
-/** @type {Promise<object> | null} */
-let profileCache = null;
+import profileData from './data/profile-data.json';
 
 /**
  * Fetches and caches profile data from the JSON file.
  * @returns {Promise<object>}
  */
 export function getProfileData() {
-  if (!profileCache) {
-    profileCache = fetch('./src/data/profile-data.json').then(res => {
-      if (!res.ok) throw new Error(`Failed to load profile data: ${res.status}`);
-      return res.json();
-    });
-  }
-  return profileCache;
+  return Promise.resolve(profileData);
 }
 
 /**
