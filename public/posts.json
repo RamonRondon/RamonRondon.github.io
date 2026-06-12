@@ -4,7 +4,8 @@
     "slug": "mi-balcn",
     "date": "2026-06-12",
     "excerpt": "Inspiracion de Junio 1 de 2020",
-    "category": "Poemas"
+    "category": "Poemas",
+    "isPoem": true
   },
   {
     "title": "Prueba 1",

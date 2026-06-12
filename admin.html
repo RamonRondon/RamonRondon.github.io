@@ -337,6 +337,34 @@
       white-space: pre-wrap;
       word-break: break-all;
     }
+
+    /* --- Poetry (Poem) Component --- */
+    .post-body.is-poem,
+    .preview-pane.is-poem {
+      font-family: Georgia, 'Times New Roman', serif !important;
+      font-style: italic;
+      font-size: 19px !important;
+      line-height: 1.8;
+      color: #333331;
+      max-width: 550px !important;
+      margin: var(--space-6) auto !important;
+      padding: var(--space-6) var(--space-8) !important;
+      background-color: var(--color-lifted-cream);
+      border-radius: 24px;
+      box-shadow: var(--shadow-nav);
+      border: 1px solid rgba(20, 20, 19, 0.03);
+      text-align: center;
+    }
+
+    .post-body.is-poem p,
+    .preview-pane.is-poem p {
+      display: inline-block;
+      text-align: left;
+      margin-bottom: 28px !important;
+      width: 100%;
+      max-width: 380px;
+      white-space: pre-line; /* Respects line breaks inside paragraphs */
+    }
   </style>
 </head>
 <body>
@@ -426,6 +454,11 @@
             </div>
           </div>
 
+          <div class="form-group" style="display: flex; align-items: center; margin-bottom: var(--space-4);">
+            <input type="checkbox" id="post-is-poem" style="width: auto; margin-right: 10px; cursor: pointer;">
+            <label for="post-is-poem" style="margin-bottom: 0; cursor: pointer; font-weight: 500;">¿Es un poema? (Aplica diseño y tipografía de poesía)</label>
+          </div>
+
           <div class="form-group">
             <label for="post-excerpt">Resumen (Se muestra en la lista de artículos)</label>
             <textarea id="post-excerpt" class="form-control" rows="2" required placeholder="Un resumen corto del artículo..."></textarea>
@@ -484,6 +517,7 @@
     const postDate = document.getElementById('post-date');
     const postExcerpt = document.getElementById('post-excerpt');
     const postContent = document.getElementById('post-content');
+    const postIsPoem = document.getElementById('post-is-poem');
     const previewPane = document.getElementById('preview-pane');
     const editorTitleText = document.getElementById('editor-title-text');
 
@@ -532,16 +566,37 @@
       window.location.reload();
     });
 
-    // Title to Slug Auto-generator
+    // Title to Slug Auto-generator with Accent/Diacritic Removal
     postTitle.addEventListener('input', () => {
       if (!currentPost) { // Only auto-slug for new posts
         postSlug.value = postTitle.value
           .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '') // remove accents/tildes
           .trim()
           .replace(/[^\w\s-]/g, '') // remove non-word chars
           .replace(/[\s_]+/g, '-')  // replace spaces with -
           .replace(/^-+|-+$/g, ''); // trim hyphens
       }
+    });
+
+    // Sanitize manual slug input to remove accents/tildes on input, and do full sanitization on blur
+    postSlug.addEventListener('input', () => {
+      postSlug.value = postSlug.value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    });
+
+    postSlug.addEventListener('blur', () => {
+      postSlug.value = postSlug.value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_]+/g, '-')
+        .replace(/^-+|-+$/g, '');
     });
 
     // Custom Marked Renderer for Instant Image Previews using local memory blobs
@@ -573,6 +628,15 @@
           ],
           throwOnError: false
         });
+      }
+    });
+
+    // Toggle is-poem class on preview pane in real-time
+    postIsPoem.addEventListener('change', () => {
+      if (postIsPoem.checked) {
+        previewPane.classList.add('is-poem');
+      } else {
+        previewPane.classList.remove('is-poem');
       }
     });
 
@@ -667,12 +731,20 @@
     document.getElementById('editor-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const slug = postSlug.value.trim();
+      const slug = postSlug.value
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_]+/g, '-')
+        .replace(/^-+|-+$/g, '');
       const title = postTitle.value.trim();
       const category = postCategory.value.trim();
       const date = postDate.value.trim();
       const excerpt = postExcerpt.value.trim();
       const content = postContent.value;
+      const isPoem = postIsPoem.checked;
  
       showStatus(editorStatus, 'Publicando artículo y actualizando índice...', 'info');
       btnSave.disabled = true;
@@ -705,7 +777,7 @@
         }
 
         // 2. Save individual post JSON
-        const postData = { title, slug, date, excerpt, category, content };
+        const postData = { title, slug, date, excerpt, category, content, isPoem };
         const fileContentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(postData, null, 2))));
         
         // Check if file exists to get SHA for updates
@@ -759,7 +831,7 @@
 
         // Add or replace metadata in the index array
         const metaIndex = indexData.findIndex(item => item.slug === slug);
-        const postMeta = { title, slug, date, excerpt, category };
+        const postMeta = { title, slug, date, excerpt, category, isPoem };
         if (metaIndex >= 0) {
           indexData[metaIndex] = postMeta;
         } else {
@@ -951,6 +1023,14 @@
         postDate.value = postData.date;
         postExcerpt.value = postData.excerpt;
         postContent.value = postData.content;
+        postIsPoem.checked = !!postData.isPoem;
+        
+        // Update preview pane classes
+        if (postData.isPoem) {
+          previewPane.classList.add('is-poem');
+        } else {
+          previewPane.classList.remove('is-poem');
+        }
         
         // Update title text
         editorTitleText.innerText = 'Editar Artículo';
@@ -978,6 +1058,8 @@
 
       currentPost = null;
       document.getElementById('editor-form').reset();
+      postIsPoem.checked = false;
+      previewPane.classList.remove('is-poem');
       postSlug.disabled = false;
       btnDelete.style.display = 'none';
       editorTitleText.innerText = 'Nuevo Artículo';

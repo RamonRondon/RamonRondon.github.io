@@ -114,6 +114,12 @@ async function main() {
       );
 
       // 4. Inyectar detalles del artículo
+      if (postData.isPoem) {
+        html = html.replace(
+          '<section class="post-body" id="article-content">',
+          '<section class="post-body is-poem" id="article-content">'
+        );
+      }
       html = html.replace(
         '<span class="post-meta-tag" id="article-category">Categoría</span>',
         `<span class="post-meta-tag" id="article-category">${postData.category}</span>`

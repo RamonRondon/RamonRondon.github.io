@@ -196,6 +196,32 @@
       color: var(--color-slate-gray);
       line-height: 1.4;
     }
+
+    /* --- Poetry (Poem) Component --- */
+    .post-body.is-poem {
+      font-family: Georgia, 'Times New Roman', serif !important;
+      font-style: italic;
+      font-size: 19px !important;
+      line-height: 1.8;
+      color: #333331;
+      max-width: 550px !important;
+      margin: var(--space-6) auto !important;
+      padding: var(--space-6) var(--space-8) !important;
+      background-color: var(--color-lifted-cream);
+      border-radius: 24px;
+      box-shadow: var(--shadow-nav);
+      border: 1px solid rgba(20, 20, 19, 0.03);
+      text-align: center;
+    }
+
+    .post-body.is-poem p {
+      display: inline-block;
+      text-align: left;
+      margin-bottom: 28px !important;
+      width: 100%;
+      max-width: 380px;
+      white-space: pre-line; /* Respects line breaks inside paragraphs */
+    }
   </style>
 </head>
 <body>
@@ -356,7 +382,13 @@
         });
 
         // Render Markdown content
-        document.getElementById('article-content').innerHTML = marked.parse(postData.content || '');
+        const contentElem = document.getElementById('article-content');
+        contentElem.innerHTML = marked.parse(postData.content || '');
+        if (postData.isPoem) {
+          contentElem.classList.add('is-poem');
+        } else {
+          contentElem.classList.remove('is-poem');
+        }
 
         // Calculate reading time
         calculateReadingTime();
